@@ -4,6 +4,7 @@ import RTIMU
 import os.path
 import time, math, operator, socket
 import rospy
+import sys
 from sensor_msgs.msg import Imu
 from sensor_msgs.msg import MagneticField
 from geometry_msgs.msg import Vector3
@@ -18,10 +19,12 @@ def main():
     SETTINGS_FILE = "/home/ubuntu/catkin_ws/src/urc/src/RTIMULib"
 
     s = RTIMU.Settings(SETTINGS_FILE)
+    print(s)
     imu = RTIMU.RTIMU(s)
 
     if (not imu.IMUInit()):
         print("Failed to init IMU")
+        sys.exit(1)
 
     imu.setGyroEnable(True)  
     imu.setAccelEnable(True)  
@@ -38,6 +41,7 @@ def main():
     while not rospy.is_shutdown():
         if imu.IMURead():
             data = imu.getIMUData()
+            #print(data)
             gyro = data["gyro"]
             # subtract gravity
             rot = pyquaternion.Quaternion(axis=[0,0,1], degrees=0)
@@ -45,7 +49,6 @@ def main():
             q1 = pyquaternion.Quaternion(data["fusionQPose"][0], data["fusionQPose"][1], data["fusionQPose"][2], data["fusionQPose"][3])
             q = q * rot
             grav = q.rotate([0,0,-1])
-            print(grav)
             #print(np.multiply(grav, 9.80665))
             accel = data["accel"]
             #accel = np.add(accel, grav)
@@ -84,17 +87,17 @@ def main():
             imu_dat.header.frame_id = IMU_FRAME_ID
             imu_dat.header.stamp = rospy.Time.now()
             imu_dat.linear_acceleration = acc
-            imu_dat.orientation_covariance = [0.1, 0, 0,
-                                              0, 0.1, 0,
-                                              0, 0, 0.1]
+            imu_dat.orientation_covariance = [0.001, 0, 0,
+                                              0, 0.001, 0,
+                                              0, 0, 0.001]
             imu_dat.angular_velocity = gyro
-            imu_dat.angular_velocity_covariance = [0.1, 0, 0,
-                                                   0, 0.1, 0,
-                                                   0, 0, 0.1]
+            imu_dat.angular_velocity_covariance = [0.001, 0, 0,
+                                                   0, 0.001, 0,
+                                                   0, 0, 0.001]
             imu_dat.orientation = quat
-            imu_dat.linear_acceleration_covariance = [0.1, 0, 0,
-                                                      0, 0.1, 0,
-                                                      0, 0, 0.1]
+            imu_dat.linear_acceleration_covariance = [0.001, 0, 0,
+                                                      0, 0.001, 0,
+                                                      0, 0, 0.001]
             pubIMU.publish(imu_dat)
             print(imu_dat)
             r.sleep()
