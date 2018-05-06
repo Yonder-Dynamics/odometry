@@ -12,15 +12,6 @@
     <node pkg="tf" type="static_transform_publisher" name="camopt_to_link" args="0 0 0 0 0 0 camera_rgb_optical_frame camera_link 100" />
     <node pkg="tf" type="static_transform_publisher" name="imu_to_base" args="0 0 0.05 0 0 0 base_link imu_link 100" />
 
-    <!-- Visual Odometry
-    <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry">
-      <remap from="odom" to="vo"/>
-      <remap from="rgb/image" to="/rgb/image_raw_color"/>
-      <remap from="depth/image" to="/depth/depth_registered"/>
-      <remap from="rgb/camera_info" to="/rgb/camera_info"/>
-    </node>
-    -->
-
     <!-- Local fusion -->
     <node pkg="robot_localization" type="ekf_localization_node" name="local_fusion" output="screen">
       <remap from="odometry/filtered" to="local_fusion/filtered"/>
