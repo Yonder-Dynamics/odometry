@@ -2,6 +2,7 @@
 
 import RTIMU
 import os.path
+import rospkg
 import time, math, operator, socket
 import rospy
 import sys
@@ -16,10 +17,16 @@ import numpy as np
 IMU_FRAME_ID = "imu_link"
 
 def main():
-    SETTINGS_FILE = "/home/ubuntu/catkin_ws/src/urc/src/RTIMULib"
+    path = rospkg.RosPack().get_path("odometry")
+    print(path)
+    SETTINGS_FILE = path+"/src/RTIMULib"
+    if not os.path.isfile(SETTINGS_FILE+".ini"):
+        print("Settings file does not exist")
+        print(SETTINGS_FILE)
+        return
 
     s = RTIMU.Settings(SETTINGS_FILE)
-    print(s)
+    #print(s.MPU9250GyroAccelSampleRate)
     imu = RTIMU.RTIMU(s)
 
     if (not imu.IMUInit()):
@@ -31,15 +38,24 @@ def main():
     imu.setCompassEnable(False)  
 
     poll_interval = imu.IMUGetPollInterval() 
+    print(poll_interval)
+    hz = 1./poll_interval*1000.0
+    print(hz)
 
     pubIMU = rospy.Publisher('imu/data', Imu, queue_size=10)
     #pubMag = rospy.Publisher('/imu/magnetic_field', MagneticField, queue_size=10)
     #pubGPS = rospy.Publisher('/arduino/gps', NavSatFix, queue_size=10)
     rospy.init_node('imu', anonymous=True)
-    r = rospy.Rate(1000 / imu.IMUGetPollInterval())
+    r = rospy.Rate(hz)
+    start = time.time()
+    record = [0]*5
 
     while not rospy.is_shutdown():
         if imu.IMURead():
+            record.pop(0)
+            record.append(time.time() - start)
+            start = time.time()
+            print(1/sum(record)*len(record))
             data = imu.getIMUData()
             #print(data)
             gyro = data["gyro"]
@@ -99,7 +115,7 @@ def main():
                                                       0, 0.001, 0,
                                                       0, 0, 0.001]
             pubIMU.publish(imu_dat)
-            print(imu_dat)
+            #print(imu_dat)
             r.sleep()
 
 if __name__ == '__main__':
