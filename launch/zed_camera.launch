@@ -17,6 +17,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
+  <group ns="zed">
     <arg name="svo_file"              default="" /><!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
     <arg name="zed_id"                default="0" />
     <!-- GPU ID-->
@@ -48,7 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
         <param name="resolution"            value="2" />
         <param name="quality"               value="3" />
-        <param name="sensing_mode"          value="0" />
+        <!-- <param name="sensing_mode"          value="1" /> Standard -->
         <param name="frame_rate"            value="30" />
         <param name="odometry_db"           value="" />
         <param name="openni_depth_mode"     value="0" />
@@ -88,5 +89,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <remap from="robot_description" to="zed_description" />
         </node>
     </group>
-
+  </group>
 </launch>
