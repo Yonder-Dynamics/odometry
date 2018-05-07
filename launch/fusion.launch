@@ -2,17 +2,15 @@
 <launch output="screen">
   <group ns="fusion">
     <rosparam command="load" file="$(find odometry)/params/fusion.yaml" />
-    <node pkg="odometry" type="onboard_imu.py" name="onboard_imu"></node>
-    <!-- <node pkg="odometry" type="arduino_wheel.py" name="wheel_encoders"></node> -->
 
     <!-- TFs -->
-    <!-- <node pkg="tf" type="static_transform_publisher" name="vo_to_base" args="-.22 .18 .69 1.570796 3.14159265 1.570796 base_link camera_rgb_optical_frame 100" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="vo_to_base" args="-.22 .18 .69 1.570796 3.14159265 1.570796 base_link camera_rgb_optical_frame 100" />
     <node pkg="tf" type="static_transform_publisher" name="wheel_to_base" args="0.1778 0 0.3048 0 0 0 base_link wheel_encoders 100" />
     <node pkg="tf" type="static_transform_publisher" name="rgb_to_depth" args="0 0 0 0 0 0 camera_rgb_optical_frame camera_depth_optical_frame 100" />
-    <node pkg="tf" type="static_transform_publisher" name="camopt_to_link" args="0 0 0 0 0 0 camera_rgb_optical_frame camera_link 100" />
+    <node pkg="tf" type="static_transform_publisher" name="camopt_to_link" args="0 0 0 0 0 0 camera_rgb_optical_frame camera_link 100" /> -->
 
-    <node pkg="tf" type="static_transform_publisher" name="imu_to_base" args="0 0 0.05 0 0 0 base_link imu_link 100" />
-    <node pkg="tf" type="static_transform_publisher" name="vo_to_base" args="-.22 .18 .69 1.570796 3.14159265 1.570796 zed_center base_link 100" />
+    <node pkg="tf" type="static_transform_publisher" name="imu_to_base" args="0 0 0.05 0 0 0 base_link imu_link 33" />
+    <node pkg="tf" type="static_transform_publisher" name="hack" args="0 0 0 0 0 0 map odom 33" />
 
     <!-- Visual Odometry
     <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry">
@@ -34,13 +32,7 @@
     </node>
     -->
 
-    <!-- GPS -->
-    <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="gps">
-      <remap from="fix" to="gps/fix"/>
-      <param name="port" value="/dev/ttyAMA0"/>
-      <param name="baud" value="9600"/>
-    </node>
-
+    <!--
     <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" respawn="true">
       <param name="magnetic_declination_radians" value="0"/>
       <param name="yaw_offset" value="0"/>
@@ -48,6 +40,7 @@
       <remap from="/imu/data" to="/fusion/imu/data" />
       <remap from="odometry/filtered" to="local_fusion/filtered" />
     </node>
+    -->
 
     <!-- GOAL 
     <node pkg="odometry" type="goal_pub.py" name="goal_pub"/>
