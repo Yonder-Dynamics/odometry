@@ -1,0 +1,4 @@
+<launch output="screen">
+  <include file="$(find odometry)/launch/visuals.launch"/>
+  <include file="$(find odometry)/launch/fusion.launch"/>
+</launch>

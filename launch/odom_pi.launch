@@ -1,0 +1,3 @@
+<launch output="screen">
+  <include file="$(find odometry)/launch/sensors.launch"/>
+</launch>
