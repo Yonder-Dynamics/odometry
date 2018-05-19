@@ -64,10 +64,6 @@ def main():
             axis = [1, 0, 0]
             angle = math.pi
             rot180 = pyquaternion.Quaternion(math.cos(angle/2), math.sin(angle/2)*axis[0], math.sin(angle/2)*axis[1], math.sin(angle/2)*axis[2])
-            print(rot180.axis)
-            print(rot180.angle)
-            print(q)
-            print(q * rot180)
             q = rot180*q*rot180.inverse
             # quaternion is upside down
             #print(np.multiply(grav, 9.80665))
@@ -108,17 +104,17 @@ def main():
             imu_dat.header.frame_id = IMU_FRAME_ID
             imu_dat.header.stamp = rospy.Time.now()
             imu_dat.linear_acceleration = acc
-            imu_dat.linear_acceleration_covariance = [0.001, 0, 0,
-                                                      0, 0.001, 0,
-                                                      0, 0, 0.001]
+            imu_dat.linear_acceleration_covariance = [0.04, 0, 0,
+                                                      0, 0.04, 0,
+                                                      0, 0, 0.04]
             imu_dat.orientation = quat
-            imu_dat.orientation_covariance = [0.001, 0, 0,
-                                              0, 0.001, 0,
-                                              0, 0, 0.001]
+            imu_dat.orientation_covariance = [0.0025, 0, 0,
+                                              0, 0.0025, 0,
+                                              0, 0, 0.0025]
             imu_dat.angular_velocity = gyro
-            imu_dat.angular_velocity_covariance = [0.001, 0, 0,
-                                                   0, 0.001, 0,
-                                                   0, 0, 0.001]
+            imu_dat.angular_velocity_covariance = [0.02, 0, 0,
+                                                   0, 0.02, 0,
+                                                   0, 0, 0.02]
             pubIMU.publish(imu_dat)
             #print(imu_dat)
             r.sleep()
