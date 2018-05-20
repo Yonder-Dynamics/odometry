@@ -47,8 +47,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <!-- ZED parameters -->
         <param name="zed_id"                value="$(arg zed_id)" />
 
-        <param name="resolution"            value="2" />
-        <param name="quality"               value="3" />
+        <param name="resolution"            value="3" />
+        <param name="quality"               value="4" />
         <!-- <param name="sensing_mode"          value="1" /> Standard -->
         <param name="frame_rate"            value="30" />
         <param name="odometry_db"           value="" />
@@ -79,6 +79,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <param name="point_cloud_topic"     value="point_cloud/cloud_registered" />
 
         <param name="odometry_topic"        value="odom" />
+        <param name="range"        value="5" />
+        <param name="colorless"    value="false" />
+        <param name="voxel_size"    value="0.1" />
+        <!-- <param name="voxel_size"    value="-1" /> -->
 
     </node>
 

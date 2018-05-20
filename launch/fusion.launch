@@ -9,7 +9,7 @@
     <node pkg="tf" type="static_transform_publisher" name="rgb_to_depth" args="0 0 0 0 0 0 camera_rgb_optical_frame camera_depth_optical_frame 100" />
     <node pkg="tf" type="static_transform_publisher" name="camopt_to_link" args="0 0 0 0 0 0 camera_rgb_optical_frame camera_link 100" /> -->
 
-    <node pkg="tf" type="static_transform_publisher" name="imu_to_base" args="0 0 0.05 0 0 0 base_link imu_link 30" />
+    <node pkg="tf" type="static_transform_publisher" name="imu_to_base" args="0 0 0.05 0 0 3.14159265 base_link imu_link 30" />
     <node pkg="tf" type="static_transform_publisher" name="hack" args="0 0 0 0 0 0 map odom 30" />
 
     <!-- Local fusion -->

@@ -10,9 +10,6 @@ project(odometry)
 find_package(
   catkin REQUIRED
 	roscpp
-  zed REQUIRED
-  PCL
-  pcl_conversions
   tf
   rospy
   sensor_msgs
@@ -25,16 +22,3 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
-include_directories(
-# include
- ${catkin_INCLUDE_DIRS}
-)
-
-set(ALL_LIBS
-  ${catkin_LIBRARIES}
-  ${ZED_LIBRARIES}
-  ${CUDA_NPP_LIBRARIES_ZED}
-)
-
-add_executable(zed_camera_node src/zed/zed_main.cpp)
-target_link_libraries(ZED ALL_LIBS)
