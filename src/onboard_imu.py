@@ -60,7 +60,11 @@ def main():
             #print(data)
             gyro = data["gyro"]
             # subtract gravity
-            #q = pyquaternion.Quaternion(data["fusionQPose"][2], data["fusionQPose"][1], data["fusionQPose"][0], data["fusionQPose"][3])
+            q = pyquaternion.Quaternion(data["fusionQPose"][0], data["fusionQPose"][1], data["fusionQPose"][2], data["fusionQPose"][3])
+            axis = [1, 0, 0]
+            angle = math.pi
+            rot180 = pyquaternion.Quaternion(math.cos(angle/2), math.sin(angle/2)*axis[0], math.sin(angle/2)*axis[1], math.sin(angle/2)*axis[2])
+            q = rot180*q*rot180.inverse
             # quaternion is upside down
             #print(np.multiply(grav, 9.80665))
             accel = data["accel"]
@@ -72,9 +76,9 @@ def main():
             acc.z = accel[2] * 9.80665
 
             gyro = Vector3()
-            gyro.x = data["gyro"][0]
+            gyro.x = -data["gyro"][0]
             gyro.y = data["gyro"][1]
-            gyro.z = data["gyro"][2]
+            gyro.z = -data["gyro"][2]
 
             msg = MagneticField()
             msg.header.frame_id = IMU_FRAME_ID
@@ -91,26 +95,26 @@ def main():
             quat.z = data["fusionQPose"][2]
             quat.w = data["fusionQPose"][3]
             """
-            quat.x = data["fusionQPose"][1]
-            quat.y = data["fusionQPose"][2]
-            quat.z = data["fusionQPose"][3]
-            quat.w = data["fusionQPose"][0]
+            quat.x = q[1]
+            quat.y = q[2]
+            quat.z = q[3]
+            quat.w = q[0]
 
             imu_dat = Imu()
             imu_dat.header.frame_id = IMU_FRAME_ID
             imu_dat.header.stamp = rospy.Time.now()
             imu_dat.linear_acceleration = acc
-            imu_dat.linear_acceleration_covariance = [0.001, 0, 0,
-                                                      0, 0.001, 0,
-                                                      0, 0, 0.001]
+            imu_dat.linear_acceleration_covariance = [0.04, 0, 0,
+                                                      0, 0.04, 0,
+                                                      0, 0, 0.04]
             imu_dat.orientation = quat
-            imu_dat.orientation_covariance = [0.001, 0, 0,
-                                              0, 0.001, 0,
-                                              0, 0, 0.001]
+            imu_dat.orientation_covariance = [0.0025, 0, 0,
+                                              0, 0.0025, 0,
+                                              0, 0, 0.0025]
             imu_dat.angular_velocity = gyro
-            imu_dat.angular_velocity_covariance = [0.001, 0, 0,
-                                                   0, 0.001, 0,
-                                                   0, 0, 0.001]
+            imu_dat.angular_velocity_covariance = [0.02, 0, 0,
+                                                   0, 0.02, 0,
+                                                   0, 0, 0.02]
             pubIMU.publish(imu_dat)
             #print(imu_dat)
             r.sleep()
