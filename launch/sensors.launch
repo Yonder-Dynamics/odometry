@@ -1,0 +1,11 @@
+<launch output="screen">
+  <!-- IMU -->
+  <node pkg="odometry" type="onboard_imu.py" name="onboard_imu"></node>
+
+  <!-- GPS 
+  <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="gps">
+    <remap from="fix" to="gps/fix"/>
+    <param name="port" value="/dev/ttyAMA0"/>
+    <param name="baud" value="9600"/>
+  </node>-->
+</launch>
