@@ -46,7 +46,6 @@ def main():
             # subtract gravity
             rot = pyquaternion.Quaternion(axis=[0,0,1], degrees=0)
             q = pyquaternion.Quaternion(data["fusionQPose"][2], data["fusionQPose"][1], data["fusionQPose"][0], data["fusionQPose"][3])
-            q1 = pyquaternion.Quaternion(data["fusionQPose"][0], data["fusionQPose"][1], data["fusionQPose"][2], data["fusionQPose"][3])
             q = q * rot
             grav = q.rotate([0,0,-1])
             #print(np.multiply(grav, 9.80665))
