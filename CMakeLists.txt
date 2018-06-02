@@ -9,8 +9,6 @@ project(odometry)
 ## is used, also find other catkin packages
 find_package(
   catkin REQUIRED
-	roscpp
-  zed REQUIRED
   PCL
   pcl_conversions
   tf
@@ -32,9 +30,4 @@ include_directories(
 
 set(ALL_LIBS
   ${catkin_LIBRARIES}
-  ${ZED_LIBRARIES}
-  ${CUDA_NPP_LIBRARIES_ZED}
 )
-
-add_executable(zed_camera_node src/zed/zed_main.cpp)
-target_link_libraries(ZED ALL_LIBS)
