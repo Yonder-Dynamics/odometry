@@ -2,7 +2,5 @@
   <!-- Zed camera -->
   <node pkg="tf" type="static_transform_publisher" name="vo_to_base" args="0 0 0 0 0 0 base_link zed_center 16.1515151" />
   <include file="$(find odometry)/launch/zed_camera.launch"/>
-  <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
-    <remap from="cloud_in" to="/point_cloud/cloud_registered" />
-  </node>
+  <include file="$(find odometry)/launch/octomap.launch"/>
 </launch>

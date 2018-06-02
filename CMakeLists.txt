@@ -9,7 +9,6 @@ project(odometry)
 ## is used, also find other catkin packages
 find_package(
   catkin REQUIRED
-  PCL
   pcl_conversions
   tf
   rospy
@@ -23,6 +22,7 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
+<<<<<<< HEAD
 include_directories(
 # include
  ${catkin_INCLUDE_DIRS}
@@ -31,3 +31,5 @@ include_directories(
 set(ALL_LIBS
   ${catkin_LIBRARIES}
 )
+=======
+>>>>>>> 7061dd396f10dcdc8c584c13769634ff22fb3ebd

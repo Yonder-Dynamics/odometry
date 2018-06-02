@@ -60,12 +60,19 @@ def main():
             #print(data)
             gyro = data["gyro"]
             # subtract gravity
+<<<<<<< HEAD
+            rot = pyquaternion.Quaternion(axis=[0,0,1], degrees=0)
+            q = pyquaternion.Quaternion(data["fusionQPose"][2], data["fusionQPose"][1], data["fusionQPose"][0], data["fusionQPose"][3])
+            q = q * rot
+            grav = q.rotate([0,0,-1])
+=======
             q = pyquaternion.Quaternion(data["fusionQPose"][0], data["fusionQPose"][1], data["fusionQPose"][2], data["fusionQPose"][3])
             axis = [1, 0, 0]
             angle = math.pi
             rot180 = pyquaternion.Quaternion(math.cos(angle/2), math.sin(angle/2)*axis[0], math.sin(angle/2)*axis[1], math.sin(angle/2)*axis[2])
             q = rot180*q*rot180.inverse
             # quaternion is upside down
+>>>>>>> 0f5e648eae4dfa2aa21e725f872b762e627f8bbd
             #print(np.multiply(grav, 9.80665))
             accel = data["accel"]
             #accel = np.add(accel, grav)
